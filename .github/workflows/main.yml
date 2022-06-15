@@ -20,8 +20,8 @@ jobs:
           password: "${{ secrets.DOCKER_LOGIN_PASS }}"
       - name: Build and push image
         run: |
-          docker build --file Dockerfile .
-          docker push https://registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+          docker build -t registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest  .
+          docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
         
 #       - uses: actions/checkout@v3
 #       - name: Build the Docker image
