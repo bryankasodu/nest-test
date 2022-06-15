@@ -9,6 +9,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # - uses: actions/checkout@v3
+      # - name: Build the Docker image
+      #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      
+      # - uses: aliyun/acr-login@v1
+      #   with:
+      #     login-server: '<login server>' # example: https://my-test-registry.cn-hangzhou.cr.aliyuncs.com
+      #     region-id: '<region id>' # example: cn-hangzhou
+      #     access-key-id: '<access key id>'
+      #     access-key-secret: '<access key secret>'
+      #     instance-id: '<registry instance id>'
+      
+      # - name: Build and push image
+      #   env:
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     docker build -t registry.cn-hangzhou.aliyuncs.com/myrepo/demo:$IMAGE_TAG .
+      #     docker push registry.cn-hangzhou.aliyuncs.com/myrepo/demo:$IMAGE_TAG
+
+      - uses: aliyun/ack-set-context@v1
+        with:
+
+          access-key-id: ${{ secrets.ACCESS_KEY }}
+          access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
+          cluster-id: ${{ secret.ACK_CLUSTER_ID }}
