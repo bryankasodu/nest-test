@@ -12,6 +12,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        
+      - name: push to alibaba
+        run: docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
       
       # - uses: aliyun/acr-login@v1
       #   with:
