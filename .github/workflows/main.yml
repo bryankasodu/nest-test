@@ -13,7 +13,7 @@ jobs:
       - name: Login to ACR
         uses: aliyun/acr-login@v1
         with:
-          login-server: registry-intl.ap-southeast-5.aliyuncs.com
+          login-server:  https://registry-intl.ap-southeast-5.aliyuncs.com
           username: "${{ secrets.DOCKER_LOGIN_USER }}"
           password: "${{ secrets.DOCKER_LOGIN_PASS }}"
       - name: Build and push image
