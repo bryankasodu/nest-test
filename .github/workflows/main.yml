@@ -14,7 +14,9 @@ jobs:
         run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
         
       - name: push to alibaba
-        run: docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+        run: 
+          docker login --username={{ secrets.DOCKER_LOGIN_USER }} --password:{{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com 
+          docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
       
       # - uses: aliyun/acr-login@v1
       #   with:
