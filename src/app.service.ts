@@ -8,7 +8,7 @@ export interface Account {
 @Injectable()
 export class AppService {
   private account: Account[] = [
-    { account_id: 1, account_name: 'Bryan'},
+    { account_id: 1, account_name: 'Gilbert'},
     { account_id: 2, account_name: 'Nicholas'},
   ];
 
