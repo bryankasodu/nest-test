@@ -44,4 +44,5 @@ jobs:
           script:  |
             docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+            docker stop --name nest_test
             docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
