@@ -31,5 +31,6 @@ jobs:
           key: ${{ secrets.SSH_KEY_ED25519 }}
           port: ${{ secrets.SSH_PORT }}
           script:  |
+            docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
             docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
