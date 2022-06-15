@@ -20,7 +20,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest .
+          docker build --file Dockerfile .
           docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
         
 #       - uses: actions/checkout@v3
