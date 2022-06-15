@@ -24,13 +24,24 @@ jobs:
           docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
 
       - name: SSH to server
-        uses: appleboy/ssh-action@master
+        uses: fifsky/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY_RSA }}
-          port: ${{ secrets.SSH_PORT }}
-          script:  |
+          command: |
             docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
             docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+          host: ${{ secrets.SSH_HOST }}
+          user: root
+          key: ${{ secrets.SSH_KEY_RSA }}
+          
+          
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USERNAME }}
+#           key: ${{ secrets.SSH_KEY_RSA }}
+#           port: ${{ secrets.SSH_PORT }}
+#           script:  |
+#             docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
+#             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+#             docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
