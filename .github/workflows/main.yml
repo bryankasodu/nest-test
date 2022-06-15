@@ -9,29 +9,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+        
       - uses: actions/checkout@v3
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       
-      # - uses: aliyun/acr-login@v1
-      #   with:
-      #     login-server: '<login server>' # example: https://my-test-registry.cn-hangzhou.cr.aliyuncs.com
-      #     region-id: '<region id>' # example: cn-hangzhou
-      #     access-key-id: '<access key id>'
-      #     access-key-secret: '<access key secret>'
-      #     instance-id: '<registry instance id>'
-      
-      # - name: Build and push image
-      #   env:
-      #     IMAGE_TAG: ${{ github.sha }}
-      #   run: |
-      #     docker build -t registry.cn-hangzhou.aliyuncs.com/myrepo/demo:$IMAGE_TAG .
-      #     docker push registry.cn-hangzhou.aliyuncs.com/myrepo/demo:$IMAGE_TAG
+      - name: Login to ACR
+        uses: aliyun/acr-login@v1
+        with:
+          login-server:  https://registry-intl.ap-southeast-5.aliyuncs.com
+          username: "${{ secrets.DOCKER_LOGIN_USER }}"
+          password: "${{ secrets.DOCKER_LOGIN_PASS }}"
+      - name: Build and push image
+        run: |
+          docker build -t registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest  .
+          docker push registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
 
-      # - uses: aliyun/ack-set-context@v1
-      # - name: Connect alibaba ACK
-      #   with:
-
-      #     access-key-id: ${{ secrets.ACCESS_KEY }}
-      #     access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
-      #     cluster-id: ${{ secret.ACK_CLUSTER_ID }}
+      - name: SSH to server
+#         uses: fifsky/ssh-action@master
+#         with:
+#           command: |
+#             docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
+#             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+#             docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+#           host: ${{ secrets.SSH_HOST }}
+#           user: root
+#           key: ${{ secrets.SSH_KEY_RSA }}
+          
+          
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY_ED25519 }}
+          port: ${{ secrets.SSH_PORT }}
+          script:  |
+            docker login --username=${{ secrets.DOCKER_LOGIN_USER }} --password=${{ secrets.DOCKER_LOGIN_PASS }} registry-intl.ap-southeast-5.aliyuncs.com
+            docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+            docker run -d  --name nest_test -p 3000:3000 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
