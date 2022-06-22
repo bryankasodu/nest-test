@@ -46,4 +46,4 @@ jobs:
             docker pull registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
             docker stop --name nest_test
             docker rm -f nest_test &>/dev/null
-            docker run -d  --name nest_test --expose 80 registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
+            docker run -d  --name nest_test registry-intl.ap-southeast-5.aliyuncs.com/devops_pouk/nest_test:latest
